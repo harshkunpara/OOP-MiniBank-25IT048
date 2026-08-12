@@ -10,7 +10,7 @@ public class StatementFormatter {
           .append("\n");
 
         sb.append("Owner Name     : ")
-          .append(account.getOwnerName())
+          .append(account.getOwnerName()) 
           .append("\n");
 
         sb.append("Balance        : ")

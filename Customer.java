@@ -10,7 +10,7 @@ private static String genratecustomerid(){
 }
 //Practical 3
   public static class Address{
-
+ 
         private String city;
         private String state;
 

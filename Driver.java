@@ -1,6 +1,6 @@
 public class Driver {
     public static void main(String[] args) {
-
+ 
         // Mobile Validation
         System.out.println("===== MOBILE =====");
         System.out.println(Validator.isValidMobile("9876543210"));

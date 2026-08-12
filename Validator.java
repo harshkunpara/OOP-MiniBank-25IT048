@@ -16,7 +16,7 @@ public class Validator {
 
     public static boolean isValidMobile(String mobile) {
         return MOBILE_PATTERN.matcher(mobile).matches();
-    }
+    } 
 
     public static boolean isValidEmail(String email) {
         return EMAIL_PATTERN.matcher(email).matches();

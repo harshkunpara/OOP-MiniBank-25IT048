@@ -7,7 +7,7 @@ public class CommandParser {
         if (parts.length != 3) {
             throw new IllegalArgumentException("Invalid Command");
         }
-
+ 
         TransactionType type = TransactionType.valueOf(parts[0]);
 
         String accountNumber = parts[1];

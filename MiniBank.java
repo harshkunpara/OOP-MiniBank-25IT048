@@ -4,7 +4,7 @@ enum MenuOption{
         }
          record BankInfo(String Name,String Branch){}
 public class MiniBank {
-    public static void main(String[] args) {
+     public static void main(String[] args) {
         
         BankInfo bank=new BankInfo(" MiniBank"," Dhrangadhra");
         System.out.println(bank);

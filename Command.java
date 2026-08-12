@@ -3,4 +3,4 @@ public record Command(
         String accountNumber,
         long amount
 ) {
-}
+} 

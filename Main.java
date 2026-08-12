@@ -1,7 +1,7 @@
 public class Main{
 
     public static void main(String[] args) {
-
+ 
         Customer c1 = new Customer("Riya", "riya@gmail.com", "9876543210");
         Customer c2 = new Customer("Harsh", "harsh@gmail.com", "9876500000");
         Customer c3 = new Customer("Amit", "amit@gmail.com", "9999999999");

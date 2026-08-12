@@ -1,10 +1,10 @@
 import java.util.Objects;
 
-public class Account {
+public abstract class Account{
     private final String accountNumber;
     private String ownerName;
     private long balance;
-    private boolean active;
+    private boolean active; 
     private static int accountcounter=1;
     private static String genrateaccountnumber(){
         return String.format("AC%04d",accountcounter++);
@@ -73,4 +73,7 @@ public class Account {
     public int hashCode() {
         return Objects.hash(accountNumber);
     }
+    public abstract double interestRate();
+
+public abstract boolean canWithdraw(long amount);
 }
