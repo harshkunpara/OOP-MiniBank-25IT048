@@ -8,6 +8,7 @@ public class MiniBank {
         
         BankInfo bank=new BankInfo(" MiniBank"," Dhrangadhra");
         System.out.println(bank);
+        Scanner sc=new Scanner(System.in);
         while(true){
         System.out.println("\n===== MINI BANK OF DHRANGADHRA=====");
         System.out.println("1. Open Account");
@@ -15,7 +16,6 @@ public class MiniBank {
         System.out.println("3. Withdraw");
         System.out.println("4. Transfer");
         System.out.println("5. Exit");
-        Scanner sc=new Scanner(System.in);
         System.out.print("Enter choice:");
         int choice=sc.nextInt();
         switch(choice){
