@@ -8,7 +8,7 @@ private static long Customercounter=101;
 private static String genratecustomerid(){
     return "CUST"+Customercounter++;
 }
-//Practical 3
+//Implement For Practical 3
   public static class Address{
  
         private String city;

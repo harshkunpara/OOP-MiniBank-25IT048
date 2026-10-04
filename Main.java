@@ -5,7 +5,7 @@ public class Main{
         Customer c1 = new Customer("Riya", "riya@gmail.com", "9876543210");
         Customer c2 = new Customer("Harsh", "harsh@gmail.com", "9876500000");
         Customer c3 = new Customer("Amit", "amit@gmail.com", "9999999999");
-          //Practical 3
+          //Implement For Practical 3
         c1.setAddress(new Customer.Address("Rajkot", "Gujarat"));
         c2.setAddress(new Customer.Address("Surendranagar", "Gujarat"));
         c3.setAddress(new Customer.Address("Surat", "Gujarat"));
