@@ -49,7 +49,7 @@ public abstract class Account{
     public boolean isActive() {
         return active;
     }
-    //Implement For Practical 3
+    // Implement For Practical 3
        @Override
     public String toString() {
         return accountNumber+" | "+ownerName +" | "+ balance;
