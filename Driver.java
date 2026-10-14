@@ -33,7 +33,7 @@ public class Driver {
         // Statement Formatter
         System.out.println("\n===== STATEMENT =====");
 
-        Account account = new Account("Harsh", 5000);
+        Account account = new SavingsAccount("Harsh", 5000);
 
         System.out.println(
                 StatementFormatter.buildStatement(account)

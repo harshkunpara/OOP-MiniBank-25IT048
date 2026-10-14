@@ -1,4 +1,4 @@
-public class Customer {
+public class Customer implements Cloneable {
 private String Name;
 private String Email;
 private String Mobile;

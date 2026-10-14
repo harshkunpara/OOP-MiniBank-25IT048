@@ -12,9 +12,9 @@ public class Main{
 
         Account[] accounts = new Account[3];
 
-        accounts[0] = new Account(c1.getname(), 5000);
-        accounts[1] = new Account(c2.getname(), 10000);
-        accounts[2] = new Account(c3.getname());
+        accounts[0] = new SavingsAccount(c1.getname(), 5000);
+        accounts[1] = new CurrentAccount(c2.getname(), 10000);
+        accounts[2] = new FixedDepositAccount(c3.getname());
 
         accounts[0].DEPOSIT(2000);
         System.out.println("Withdraw 3000 : " + accounts[0].WITHDRAW(3000));
