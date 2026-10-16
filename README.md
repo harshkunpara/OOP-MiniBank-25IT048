@@ -576,15 +576,35 @@ The remaining practical sessions will extend MiniBank into an enterprise-grade b
 
 ---
 
-## Academic Context and Credits
+## 🎓 Academic Context & Credits
 
-- **Course**: Object Oriented Programming (CEUE203)
-- **Institution**: Faculty of Engineering and Technology
-- **Academic Year**: 2026 – 2027 (Semester 3)
-- **Student Name / Repository**: [Harsh Patel](https://github.com/harshkunpara) / [MiniBank](https://github.com/harshkunpara/MiniBank) / `OOP-MiniBank-25IT048`
+| **Category** | **Details** |
+|:---|:---|
+| **Course** | Object-Oriented Programming (CEUE203) |
+| **Institute** | Chandubhai S. Patel Institute of Technology (CSPIT) |
+| **Department** | Information Technology (IT) |
+| **Academic Year** | 2026–2027 |
+| **Semester** | Semester 3 |
+| **Student** | [Harsh Kunpara](https://github.com/harshkunpara) |
+| **Project** | [MiniBank](https://github.com/harshkunpara/MiniBank) |
+| **Repository** | `OOP-MiniBank-25IT048` |
 
 ---
 
-## License
+## License & Usage
 
-This project is created for educational and academic evaluation purposes. All rights belong to the repository owner and respective academic institution. Not specified for commercial distribution.
+This project was developed for **educational and academic evaluation purposes** as part of the Object-Oriented Programming course.
+
+- **Ownership:** Project materials remain subject to the rights of their respective owners.
+- **Permitted Use:** Academic learning, demonstration, and evaluation.
+- **Commercial Use:** Commercial use or redistribution requires appropriate authorization from the respective rights holders.
+
+---
+
+<div align="center">
+
+** Built with Java | Driven by Learning**
+
+*CHARUSAT · CSPIT · Information Technology*
+
+</div>
