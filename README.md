@@ -603,7 +603,7 @@ This project was developed for **educational and academic evaluation purposes** 
 
 <div align="center">
 
-** Built with Java | Driven by Learning**
+**Built with Java | Driven by Learning**
 
 *CHARUSAT · CSPIT · Information Technology*
 
