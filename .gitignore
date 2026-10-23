@@ -1,0 +1,16 @@
+# Compiled Class Files
+*.class
+out/
+bin/
+
+# Persistence & Temporary Files
+data/
+logs/
+scratch/
+tempCodeRunnerFile.java
+
+# IDE & Editor Files
+.vscode/
+.idea/
+*.iml
+*.swp

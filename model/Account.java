@@ -4,12 +4,14 @@ import exception.AccountNotFoundException;
 import exception.BankException;
 import exception.InsufficientFundsException;
 import exception.InvalidAmountException;
+import java.io.Serializable;
 import java.util.Objects;
 import model.annotation.Id;
 import model.annotation.MaxLength;
 import model.annotation.Positive;
 
-public abstract class Account implements Transactable, InterestBearing {
+public abstract class Account implements Transactable, InterestBearing, Comparable<Account>, Serializable {
+    private static final long serialVersionUID = 1L;
 
     @Id
     private final String accountNumber;
@@ -21,14 +23,14 @@ public abstract class Account implements Transactable, InterestBearing {
     private long balance;
 
     private boolean active;
-    private static int accountcounter = 1;
+    private static int accountCounter = 1;
 
-    private static String genrateaccountnumber() {
-        return String.format("AC%04d", accountcounter++);
+    private static synchronized String generateAccountNumber() {
+        return String.format("AC%04d", accountCounter++);
     }
 
     public Account(String ownerName, long balance) {
-        this.accountNumber = genrateaccountnumber();
+        this.accountNumber = generateAccountNumber();
         this.ownerName = ownerName;
         this.balance = balance;
         this.active = true;
@@ -84,13 +86,16 @@ public abstract class Account implements Transactable, InterestBearing {
         if (to == null) {
             throw new AccountNotFoundException("Target account not found");
         }
+        if (this.equals(to)) {
+            throw new InvalidAmountException("Cannot transfer to the same account");
+        }
+        this.withdraw(amount);
         try {
-            this.withdraw(amount);
             to.deposit(amount);
         } catch (BankException e) {
+            // Rollback withdrawal to maintain balance consistency
+            this.deposit(amount);
             throw e;
-        } finally {
-            // Execution log or cleanup if necessary
         }
     }
 
@@ -113,6 +118,14 @@ public abstract class Account implements Transactable, InterestBearing {
 
     public void setActive(boolean active) {
         this.active = active;
+    }
+
+    @Override
+    public int compareTo(Account other) {
+        if (other == null) {
+            return 1;
+        }
+        return this.accountNumber.compareTo(other.accountNumber);
     }
 
     @Override

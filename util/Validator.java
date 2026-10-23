@@ -16,6 +16,9 @@ public class Validator {
     private static final Pattern IFSC_PATTERN =
             Pattern.compile("^[A-Z]{4}0[A-Z0-9]{6}$");
 
+    private static final Pattern POSITIVE_AMOUNT_PATTERN =
+            Pattern.compile("^[1-9][0-9]*$");
+
     public static boolean isValidMobile(String mobile) {
         return mobile != null && MOBILE_PATTERN.matcher(mobile).matches();
     }
@@ -30,5 +33,9 @@ public class Validator {
 
     public static boolean isValidIfsc(String ifsc) {
         return ifsc != null && IFSC_PATTERN.matcher(ifsc).matches();
+    }
+
+    public static boolean isValidAmount(String amount) {
+        return amount != null && POSITIVE_AMOUNT_PATTERN.matcher(amount.trim()).matches();
     }
 }

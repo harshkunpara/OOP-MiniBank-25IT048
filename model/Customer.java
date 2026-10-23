@@ -1,18 +1,27 @@
 package model;
 
-public class Customer implements Cloneable {
-    private String Name;
-    private String Email;
-    private String Mobile;
-    private final String CustomerID;
-    private Address address;
-    private static long Customercounter = 101;
+import java.io.Serializable;
+import model.annotation.Id;
 
-    private static String genratecustomerid() {
-        return "CUST" + Customercounter++;
+public class Customer implements Cloneable, Serializable {
+    private static final long serialVersionUID = 1L;
+
+    @Id
+    private final String customerId;
+    private String name;
+    private String email;
+    private String mobile;
+    private Address address;
+
+    private static long customerCounter = 101;
+
+    private static synchronized String generateCustomerId() {
+        return "CUST" + customerCounter++;
     }
 
-    public static class Address {
+    public static class Address implements Serializable {
+        private static final long serialVersionUID = 1L;
+
         private String line;
         private String city;
         private String state;
@@ -54,11 +63,11 @@ public class Customer implements Cloneable {
         }
     }
 
-    public Customer(String Name, String Email, String Mobile) {
-        this.Name = Name;
-        this.Email = Email;
-        this.Mobile = Mobile;
-        this.CustomerID = genratecustomerid();
+    public Customer(String name, String email, String mobile) {
+        this.name = name;
+        this.email = email;
+        this.mobile = mobile;
+        this.customerId = generateCustomerId();
     }
 
     public void setAddress(Address address) {
@@ -69,47 +78,52 @@ public class Customer implements Cloneable {
         return address;
     }
 
-    public String getname() {
-        return Name;
-    }
-
     public String getName() {
-        return Name;
-    }
-
-    public String getemail() {
-        return Email;
+        return name;
     }
 
     public String getEmail() {
-        return Email;
-    }
-
-    public String getmonile() {
-        return Mobile;
+        return email;
     }
 
     public String getMobile() {
-        return Mobile;
-    }
-
-    public String getcustomerid() {
-        return CustomerID;
+        return mobile;
     }
 
     public String getCustomerId() {
-        return CustomerID;
+        return customerId;
+    }
+
+    // Compatibility getters for legacy callers
+    public String getname() {
+        return name;
+    }
+
+    public String getemail() {
+        return email;
+    }
+
+    public String getmonile() {
+        return mobile;
+    }
+
+    public String getcustomerid() {
+        return customerId;
     }
 
     @Override
     public String toString() {
-        return CustomerID + " | " + Name + " | " + Email + " | " + Mobile + " | " + address;
+        return customerId + " | " + name + " | " + email + " | " + mobile + " | " + address;
     }
 
     @Override
     public Customer clone() {
         try {
-            return (Customer) super.clone();
+            Customer copy = (Customer) super.clone();
+            if (this.address != null) {
+                copy.address = new Address(this.address.getLine(), this.address.getCity(), this.address.getPincode());
+            }
+            return copy;
         } catch (CloneNotSupportedException e) {
             return null;
         }
