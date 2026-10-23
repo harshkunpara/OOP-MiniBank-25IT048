@@ -7,12 +7,6 @@
 [![Status](https://img.shields.io/badge/Practicals%201--14-Completed%20%26%20Verified-brightgreen.svg)](#practical-wise-implementation)
 
 
-[![Java Version](https://img.shields.io/badge/Java-21%20LTS-orange.svg)](https://www.oracle.com/java/)
-[![Architecture](https://img.shields.io/badge/Architecture-Layered%20Enterprise-blue.svg)](#project-architecture)
-[![Build Tool](https://img.shields.io/badge/Build-javac%20%7C%20jar-green.svg)](#compilation-and-execution)
-[![Test Suite](https://img.shields.io/badge/Unit%20Tests-100%25%20Passing-brightgreen.svg)](#testing-and-verification)
-[![Project Scope](https://img.shields.io/badge/Scope-Part%20B%20(Practicals%201--14)-purple.svg)](#practical-wise-implementation-matrix)
-
 ---
 
 ## Table of Contents
