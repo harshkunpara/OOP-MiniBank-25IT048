@@ -699,7 +699,7 @@ MiniBank provides a complete, clean, verifiable submission that reflects real-wo
 
 ---
 
-## 🎓 Academic Recognition & Project Credits
+## Academic Recognition & Project Credits
 
 <div align="center">
 
@@ -740,7 +740,7 @@ The project serves as a practical learning resource for demonstrating Java progr
 
 ---
 
-## 📄 License & Usage
+## License & Usage
 
 This project is maintained for educational, laboratory, and academic evaluation purposes.
 
