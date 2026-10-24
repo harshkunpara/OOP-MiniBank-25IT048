@@ -258,6 +258,38 @@ flowchart TD
     class B,C,D,F,G,H,I,J,K,L,M,N,O,P,Q,R process
 ```
 
+## Banking Transaction Flow
+
+This flowchart illustrates how MiniBank validates and processes banking transactions while handling errors and maintaining account integrity.
+
+```mermaid
+flowchart TD
+    A(["Start Transaction"]) --> B["Select Account and Operation"]
+    B --> C["Enter Transaction Amount"]
+    C --> D{"Is Input Valid?"}
+
+    D -->|No| E["Display Validation Error"]
+    E --> B
+
+    D -->|Yes| F{"Select Operation"}
+    F -->|Deposit| G["Validate Deposit Rules"]
+    F -->|Withdrawal| H["Check Balance and Withdrawal Rules"]
+    F -->|Transfer| I["Validate Source and Destination Accounts"]
+
+    G --> J{"Operation Allowed?"}
+    H --> J
+    I --> J
+
+    J -->|No| K["Handle Exception and Show Error"]
+    J -->|Yes| L["Execute Transaction Safely"]
+
+    L --> M["Update Account Balances"]
+    M --> N["Record Transaction if Logging Is Enabled"]
+    N --> O["Display Transaction Result"]
+    K --> P(["Return to Menu"])
+    O --> P
+```
+
 ## Folder & Package Structure
 
 ```
