@@ -24,6 +24,35 @@ public class MiniBank {
 
     public static void main(String[] args) {
         BankInfo bankInfo = new BankInfo("MiniBank", "Dhrangadhra");
+
+        // CLI argument handling for non-interactive execution
+        if (args != null && args.length > 0) {
+            String command = args[0].trim().toLowerCase();
+            switch (command) {
+                case "test", "--test" -> {
+                    test.TestRunner.runTests(test.BankServiceTest.class);
+                    return;
+                }
+                case "demo", "--demo" -> {
+                    if (args.length > 1) {
+                        try {
+                            int pNum = Integer.parseInt(args[1].replaceAll("[^0-9]", ""));
+                            Main.runPractical(pNum);
+                        } catch (NumberFormatException e) {
+                            Main.runAll();
+                        }
+                    } else {
+                        Main.runAll();
+                    }
+                    return;
+                }
+                case "hours", "--hours" -> {
+                    printWorkingHours(bankInfo);
+                    return;
+                }
+            }
+        }
+
         System.out.println("==================================================");
         System.out.println("   " + bankInfo.name() + " — Branch: " + bankInfo.branch());
         System.out.println("   Enterprise Banking System | Practicals 1 - 14  ");
@@ -48,7 +77,7 @@ public class MiniBank {
             boolean running = true;
             while (running) {
                 printMenu();
-                System.out.print("Enter choice (1-9): ");
+                System.out.print("Enter choice (1-13): ");
 
                 if (!sc.hasNextInt()) {
                     System.out.println("Invalid input. Please enter a valid number.");
@@ -61,7 +90,7 @@ public class MiniBank {
 
                 MenuOption option = MenuOption.fromChoice(choice);
                 if (option == null) {
-                    System.out.println("Invalid choice! Please select an option between 1 and 9.");
+                    System.out.println("Invalid choice! Please select an option between 1 and 13.");
                     continue;
                 }
 
@@ -72,8 +101,12 @@ public class MiniBank {
                     case TRANSFER -> handleTransfer(sc, bankService);
                     case STATEMENT -> handleStatement(sc, bankService);
                     case LIST_ACCOUNTS -> handleListAccounts(bankService);
+                    case SEARCH_ACCOUNTS -> handleSearchAccounts(sc, bankService);
                     case BATCH_TRANSACTIONS -> handleBatchTransactions(bankService);
                     case REPORT -> handleReport(bankService);
+                    case WORKING_HOURS -> printWorkingHours(bankInfo);
+                    case RUN_PRACTICAL_DEMO -> handleRunPracticalDemo(sc);
+                    case RUN_TESTS -> test.TestRunner.runTests(test.BankServiceTest.class);
                     case EXIT -> {
                         running = false;
                         System.out.println("\nSaving application state before exit...");
@@ -254,6 +287,53 @@ public class MiniBank {
             System.out.println("[Report Saved] Written to: " + REPORT_FILE.toAbsolutePath());
         } catch (IOException e) {
             System.err.println("[FAILED] Report generation failed: " + e.getMessage());
+        }
+    }
+
+    private static void handleSearchAccounts(Scanner sc, BankService service) {
+        System.out.println("\n--- [7] Search Account by Owner Name (Practical 14 Supplementary) ---");
+        System.out.print("Enter owner name or keyword: ");
+        String query = sc.nextLine().trim();
+
+        List<Account> matches = service.searchByOwnerName(query);
+        if (matches.isEmpty()) {
+            System.out.println("No matching accounts found for: \"" + query + "\"");
+            return;
+        }
+        System.out.printf("Found %d matching account(s):\n", matches.size());
+        System.out.printf("%-10s | %-20s | %-12s | %-10s\n", "Acc Number", "Owner", "Balance", "Type");
+        System.out.println("------------------------------------------------------------");
+        for (Account a : matches) {
+            System.out.printf("%-10s | %-20s | Rs. %-8d | %-10s\n",
+                    a.getAccountNumber(), a.getOwnerName(), a.getBalance(), a.getClass().getSimpleName());
+        }
+    }
+
+    private static void printWorkingHours(BankInfo info) {
+        System.out.println("\n--- [10] Bank Working Hours (Practical 1 Supplementary) ---");
+        System.out.println("Branch: " + info.branch() + " (" + info.name() + ")");
+        System.out.println("--------------------------------------------------");
+        System.out.println("Monday - Friday    : 09:30 AM – 04:30 PM");
+        System.out.println("Saturday           : 09:30 AM – 01:30 PM (1st & 3rd Saturdays)");
+        System.out.println("Sunday & Holidays  : Closed");
+        System.out.println("ATM / Net Banking  : 24 Hours / 7 Days Available");
+        System.out.println("--------------------------------------------------");
+    }
+
+    private static void handleRunPracticalDemo(Scanner sc) {
+        System.out.println("\n--- [11] Run Practical Demonstrations (Practicals 1 - 14) ---");
+        System.out.print("Enter Practical Number (1-14) or 'all': ");
+        String input = sc.nextLine().trim();
+        if (input.equalsIgnoreCase("all") || input.isEmpty()) {
+            Main.runAll();
+        } else {
+            try {
+                int pNum = Integer.parseInt(input);
+                Main.runPractical(pNum);
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid practical number entered. Running all practicals.");
+                Main.runAll();
+            }
         }
     }
 

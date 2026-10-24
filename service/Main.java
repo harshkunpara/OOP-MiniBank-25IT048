@@ -41,29 +41,57 @@ import static util.Validator.isValidPan;
 public class Main {
 
     public static void main(String[] args) {
+        if (args != null && args.length > 0) {
+            String arg = args[0].trim();
+            if (arg.equalsIgnoreCase("all")) {
+                runAll();
+                return;
+            }
+            try {
+                int pNum = Integer.parseInt(arg.replaceAll("[^0-9]", ""));
+                System.out.println("Executing targeted demonstration for Practical " + pNum + "...");
+                runPractical(pNum);
+                return;
+            } catch (NumberFormatException e) {
+                System.out.println("Unrecognized argument: " + arg + ". Running complete suite.");
+            }
+        }
+        runAll();
+    }
+
+    public static void runAll() {
         System.out.println("================================================================================");
         System.out.println("        MINIBANK COMPREHENSIVE LABORATORY SUITE (PRACTICALS 1 - 14)             ");
         System.out.println("              Faculty of Engineering & Technology | CEUE203 OOP                ");
         System.out.println("================================================================================\n");
 
-        demoPractical1();
-        demoPractical2();
-        demoPractical3();
-        demoPractical4();
-        demoPractical5();
-        demoPractical6();
-        demoPractical7();
-        demoPractical8();
-        demoPractical9();
-        demoPractical10();
-        demoPractical11();
-        demoPractical12();
-        demoPractical13();
-        demoPractical14();
+        for (int i = 1; i <= 14; i++) {
+            runPractical(i);
+        }
 
         System.out.println("\n================================================================================");
         System.out.println("   ALL 14 PART B PRACTICALS COMPLETED, INTEGRATED AND VERIFIED SUCCESSFULLY!    ");
         System.out.println("================================================================================");
+    }
+
+    public static void runPractical(int number) {
+        switch (number) {
+            case 1 -> demoPractical1();
+            case 2 -> demoPractical2();
+            case 3 -> demoPractical3();
+            case 4 -> demoPractical4();
+            case 5 -> demoPractical5();
+            case 6 -> demoPractical6();
+            case 7 -> demoPractical7();
+            case 8 -> demoPractical8();
+            case 9 -> demoPractical9();
+            case 10 -> demoPractical10();
+            case 11 -> demoPractical11();
+            case 12 -> demoPractical12();
+            case 13 -> demoPractical13();
+            case 14 -> demoPractical14();
+            default -> System.out.println("Invalid practical number: " + number + " (Valid: 1 to 14)");
+        }
     }
 
     // =========================================================================
@@ -89,8 +117,12 @@ public class Main {
             case TRANSFER -> "Transfer — moves funds between accounts";
             case STATEMENT -> "Statement — prints formatted account summary";
             case LIST_ACCOUNTS -> "List Accounts — views all active accounts";
+            case SEARCH_ACCOUNTS -> "Search Accounts — filters accounts by owner name";
             case BATCH_TRANSACTIONS -> "Batch Transactions — concurrent execution";
             case REPORT -> "Report — end-of-day transaction audit";
+            case WORKING_HOURS -> "Working Hours — displays branch operational schedule";
+            case RUN_PRACTICAL_DEMO -> "Practical Demo — exercises complete lab requirements";
+            case RUN_TESTS -> "Automated Tests — executes reflective test suite";
             case EXIT -> "Exit — persists state and terminates";
         };
         System.out.println("Switch Expression Dispatch: " + sampleOption + " => \"" + message + "\"");
@@ -191,6 +223,12 @@ public class Main {
                 System.out.println("   [Pattern Match] Found FixedDepositAccount (Locked Funds)");
             }
         }
+
+        // Practical 5 Supplementary: FixedDepositAccount withdrawal after maturity date
+        FixedDepositAccount maturedFd = new FixedDepositAccount("MaturedUser", 15000, java.time.LocalDate.now().minusDays(1));
+        System.out.println("\nPractical 5 Supplementary: Maturity Date Conditional Withdrawal:");
+        System.out.println(" - Locked FD (unmatured) canWithdraw(5000): " + fixedDep.canWithdraw(5000) + " [Expected: false]");
+        System.out.println(" - Matured FD (past maturity) canWithdraw(5000): " + maturedFd.canWithdraw(5000) + " [Expected: true]");
     }
 
     // =========================================================================
@@ -259,6 +297,30 @@ public class Main {
             acc.deposit(-150);
         } catch (InvalidAmountException e) {
             System.out.println("Caught expected InvalidAmountException on negative deposit: " + e.getMessage());
+        }
+
+        // Practical 8 Supplementary: DailyLimitExceededException
+        long dailyLimit = 25000;
+        long requestedWithdrawal = 50000;
+        try {
+            if (requestedWithdrawal > dailyLimit) {
+                throw new exception.DailyLimitExceededException(
+                    "Daily withdrawal cap exceeded: requested " + requestedWithdrawal + " exceeds limit " + dailyLimit,
+                    dailyLimit, requestedWithdrawal);
+            }
+        } catch (exception.DailyLimitExceededException e) {
+            System.out.println("Practical 8 Supplementary: Caught DailyLimitExceededException: " + e.getMessage()
+                    + " (Limit: Rs. " + e.getDailyLimit() + ", Attempted: Rs. " + e.getAttemptedAmount() + ")");
+        }
+
+        // Practical 8 Requirement 3: transfer using try-catch-finally
+        Account targetAcc = new SavingsAccount("TransferRecipient", 2000, 500);
+        try {
+            acc.transfer(targetAcc, 300);
+            System.out.println("Successful transfer(targetAcc, 300). Balance now: Rs. " + acc.getBalance()
+                    + " | Target balance: Rs. " + targetAcc.getBalance());
+        } catch (BankException e) {
+            System.out.println("Transfer failed: " + e.getMessage());
         }
     }
 
@@ -400,6 +462,9 @@ public class Main {
             Account acc1 = new SavingsAccount("Riya", 5000, 1000);
             Account acc2 = new CurrentAccount("Harsh", 10000, 5000);
             Account acc3 = new FixedDepositAccount("Amit", 25000);
+            acc1.setTransientSessionTag("SECURE_AUTH_TOKEN_998877");
+            System.out.println("Assigned transientSessionTag to acc1 before save: '" + acc1.getTransientSessionTag() + "'");
+
             Account[] originalAccounts = { acc1, acc2, acc3 };
 
             System.out.println("Saving Account[] array to file using ObjectOutputStream...");
@@ -411,6 +476,8 @@ public class Main {
             for (Account a : loadedAccounts) {
                 System.out.println("  -> Loaded: " + a);
             }
+            System.out.println("Practical 11 Supplementary: loadedAccounts[0] transient field: " 
+                    + loadedAccounts[0].getTransientSessionTag() + " [Expected: null — not persisted]");
 
             // Transaction log append
             System.out.println("\nAppending transaction log entries using Files.write (CREATE, APPEND)...");
@@ -517,7 +584,14 @@ public class Main {
             System.out.println("\n--- 14.2 Account Statement via Service ---");
             System.out.println(service.statement(acc1.getAccountNumber()));
 
-            System.out.println("\n--- 14.3 Reflective Audit Logging (@Audit Records) ---");
+            System.out.println("\n--- 14.3 Search Account by Owner Name (Supplementary) ---");
+            List<Account> searchResults = service.searchByOwnerName("Riya");
+            System.out.println("Search results for 'Riya' (" + searchResults.size() + " matches):");
+            for (Account match : searchResults) {
+                System.out.println("  -> Found: " + match);
+            }
+
+            System.out.println("\n--- 14.4 Reflective Audit Logging (@Audit Records) ---");
             List<String> auditLogs = AuditLogger.getAuditLogs();
             System.out.println("Total reflective audit entries recorded: " + auditLogs.size());
             for (String log : auditLogs) {

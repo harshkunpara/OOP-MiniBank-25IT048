@@ -348,10 +348,14 @@ java -jar minibank.jar
 - `3. Withdraw`: Withdraw funds with overdraft/minimum balance protection and shortfall reporting.
 - `4. Transfer`: Move funds between two accounts using safe, deadlock-free lock ordering.
 - `5. Account Statement`: View a formatted account statement with real-time balance and status.
-- `6. List All Accounts`: Display a table of all registered accounts.
-- `7. Process Batch Transactions`: Execute concurrent transaction batches on a managed thread pool.
-- `8. End-of-Day Summary Report`: Run Java NIO audit report over transaction logs.
-- `9. Exit`: Automatically persists all accounts to `data/accounts.dat` and closes resources safely.
+- `6. List All Accounts`: Display a formatted table of all registered accounts.
+- `7. Search Account by Owner Name`: Filter and look up accounts by owner name substring (Practical 14 Supplementary).
+- `8. Process Batch Transactions`: Execute concurrent transaction batches on a managed thread pool (Practical 10 & 14).
+- `9. End-of-Day Summary Report`: Run Java NIO audit report over transaction logs (Practical 11 & 14).
+- `10. Bank Working Hours`: Display branch schedule and operational hours (Practical 1 Supplementary).
+- `11. Run Practical Demonstrations (1-14)`: Launch the automated practical demonstration suite from inside the menu.
+- `12. Run Automated Unit Tests`: Launch the reflective automated unit test runner from inside the menu.
+- `13. Exit`: Automatically persists all accounts to `data/accounts.dat`, releases thread pool, and terminates safely.
 
 ---
 
@@ -360,16 +364,20 @@ java -jar minibank.jar
 For faculty evaluation, lab demonstrations, or viva examinations, run the automated master test suite:
 
 ```powershell
+# Execute all 14 practical demonstrations in sequence
 java -cp out service.Main
+
+# Or execute a specific practical demonstration (e.g. Practical 5, 8, 10, or 14)
+java -cp out service.Main 5
 ```
 
-This command automatically executes Practicals 1 through 14 in sequence, displaying crystal-clear section banners, input values, dynamic outputs, and verification checks.
+This command automatically executes the selected or all practicals, displaying crystal-clear section banners, input values, dynamic outputs, and verification checks.
 
 ---
 
 ### 3. Running the Automated Unit Test Suite
 
-To run the unit tests independently:
+To run the reflection-based unit tests independently:
 
 ```powershell
 java -cp out test.TestRunner
@@ -377,10 +385,25 @@ java -cp out test.TestRunner
 
 ---
 
-### 4. Executing the Packaged Runnable JAR
+### 4. Executing the Packaged Runnable JAR (`minibank.jar`)
+
+The compiled executable JAR supports both interactive banking and direct CLI shortcuts:
 
 ```powershell
+# Launch interactive console banking application
 java -jar minibank.jar
+
+# Run the complete practical demonstration suite (Practicals 1–14)
+java -jar minibank.jar demo
+
+# Run an individual practical demonstration directly (e.g. Practical 5 or Practical 8)
+java -jar minibank.jar demo 5
+
+# Run the automated unit test suite
+java -jar minibank.jar test
+
+# Display branch operational hours
+java -jar minibank.jar hours
 ```
 
 ---
@@ -641,10 +664,12 @@ The automated test suite (`test.BankServiceTest`) directly executes the verifica
 | `testSafeTransferPreservesTotalBalance()` | Confirms that transfer operations conserve total money across accounts (`sum(A + B) == constant`). | **PASS** |
 | `testConcurrentDepositsKeepBalanceCorrect()` | Runs 10 concurrent worker threads making 500 deposits of Rs. 2 each (Rs. 10,000 total), confirming zero race condition drift. | **PASS** |
 | `testSaveAndLoadStatePersistsData()` | Verifies that object state saved to disk can be deserialized into fresh objects with identical fields. | **PASS** |
+| `testSearchByOwnerName()` | Verifies that filtering accounts by customer name returns all matching profiles (Practical 14 Supplementary). | **PASS** |
+| `testFixedDepositMaturityWithdrawalRule()` | Verifies that Fixed Deposit accounts reject withdrawals prior to maturity and allow withdrawals upon reaching maturity (Practical 5 Supplementary). | **PASS** |
 
 **Execution Result Summary**:
-- **Total Tests Run**: 6
-- **Passed**: 6 (100%)
+- **Total Tests Run**: 8
+- **Passed**: 8 (100%)
 - **Failed**: 0
 - **Regression Defects**: 0
 
@@ -653,7 +678,7 @@ The automated test suite (`test.BankServiceTest`) directly executes the verifica
 ## Known Limitations
 
 1. **Console Character Encoding**: On certain legacy Windows consoles (cmd.exe without UTF-8 codepage 65001 active), standard em-dash characters (`—`) may render as approximation glyphs. This is purely aesthetic and has no impact on banking computations.
-2. **Fixed Deposit Lock**: Fixed deposits currently disallow withdrawals by default (`canWithdraw() -> false`). Early liquidation with penalty deduction can be added as a future enhancement.
+2. **Persistence Storage Mechanism**: MiniBank utilizes native Java Object Serialization (`accounts.dat`) and append-only flat-file logging (`transactions.log`) as prescribed by Practical 11. Relational database engines (e.g. SQLite / PostgreSQL via JDBC) can be plugged into `Repository<T>` as a future production enhancement.
 
 ---
 

@@ -133,4 +133,24 @@ public class BankServiceTest {
 
         Files.deleteIfExists(tempFile);
     }
+
+    @Test
+    public void testSearchByOwnerName() throws Exception {
+        BankService service = new BankService();
+        service.openAccount("SAVINGS", "Anand Sharma", 4000, 1000);
+        service.openAccount("CURRENT", "Sharma Ji", 5000, 2000);
+        service.openAccount("SAVINGS", "Priya Verma", 3000, 1000);
+
+        java.util.List<Account> results = service.searchByOwnerName("Sharma");
+        assertEquals(2, results.size());
+    }
+
+    @Test
+    public void testFixedDepositMaturityWithdrawalRule() {
+        model.FixedDepositAccount locked = new model.FixedDepositAccount("LockedUser", 10000, null);
+        model.FixedDepositAccount matured = new model.FixedDepositAccount("MaturedUser", 10000, java.time.LocalDate.now().minusDays(1));
+
+        assertTrue(!locked.canWithdraw(1000));
+        assertTrue(matured.canWithdraw(1000));
+    }
 }

@@ -152,6 +152,7 @@ public class BankService {
         for (Account acc : loaded) {
             accountRepository.save(acc);
             transactionProcessor.registerAccount(acc);
+            Account.syncAccountCounter(acc.getAccountNumber());
         }
     }
 

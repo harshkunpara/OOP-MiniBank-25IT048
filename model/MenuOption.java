@@ -7,9 +7,13 @@ public enum MenuOption {
     TRANSFER(4, "Transfer"),
     STATEMENT(5, "Account Statement"),
     LIST_ACCOUNTS(6, "List All Accounts"),
-    BATCH_TRANSACTIONS(7, "Process Batch Transactions"),
-    REPORT(8, "End-of-Day Summary Report"),
-    EXIT(9, "Exit");
+    SEARCH_ACCOUNTS(7, "Search Account by Owner Name"),
+    BATCH_TRANSACTIONS(8, "Process Batch Transactions"),
+    REPORT(9, "End-of-Day Summary Report"),
+    WORKING_HOURS(10, "Bank Working Hours"),
+    RUN_PRACTICAL_DEMO(11, "Run Practical Demonstrations (1-14)"),
+    RUN_TESTS(12, "Run Automated Unit Tests"),
+    EXIT(13, "Exit");
 
     private final int optionNumber;
     private final String displayName;

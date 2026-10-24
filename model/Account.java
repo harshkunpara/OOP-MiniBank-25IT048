@@ -25,8 +25,23 @@ public abstract class Account implements Transactable, InterestBearing, Comparab
     private boolean active;
     private static int accountCounter = 1;
 
+    // Practical 11 Supplementary: Transient field that is not saved during object serialization
+    private transient String transientSessionTag;
+
     private static synchronized String generateAccountNumber() {
         return String.format("AC%04d", accountCounter++);
+    }
+
+    public static synchronized void syncAccountCounter(String accountNumber) {
+        if (accountNumber != null && accountNumber.matches("^AC\\d+$")) {
+            try {
+                int num = Integer.parseInt(accountNumber.substring(2));
+                if (num >= accountCounter) {
+                    accountCounter = num + 1;
+                }
+            } catch (NumberFormatException ignored) {
+            }
+        }
     }
 
     public Account(String ownerName, long balance) {
@@ -38,6 +53,14 @@ public abstract class Account implements Transactable, InterestBearing, Comparab
 
     public Account(String ownerName) {
         this(ownerName, 0);
+    }
+
+    public String getTransientSessionTag() {
+        return transientSessionTag;
+    }
+
+    public void setTransientSessionTag(String transientSessionTag) {
+        this.transientSessionTag = transientSessionTag;
     }
 
     @Override
@@ -54,9 +77,13 @@ public abstract class Account implements Transactable, InterestBearing, Comparab
             throw new InvalidAmountException("Withdrawal amount must be positive: " + amount);
         }
         if (!canWithdraw(amount)) {
-            long shortfall = amount - balance;
-            if (shortfall < 0) {
-                shortfall = 0;
+            long shortfall;
+            if (amount > balance) {
+                shortfall = amount - balance;
+            } else if (this instanceof SavingsAccount sa) {
+                shortfall = amount - Math.max(0, balance - sa.getMinBalance());
+            } else {
+                shortfall = amount;
             }
             throw new InsufficientFundsException("Insufficient funds: short by " + shortfall, shortfall);
         }
@@ -82,6 +109,7 @@ public abstract class Account implements Transactable, InterestBearing, Comparab
         }
     }
 
+    // Practical 8 Requirement 3: uses try, catch and finally and re-throws BankException when needed
     public void transfer(Account to, long amount) throws BankException {
         if (to == null) {
             throw new AccountNotFoundException("Target account not found");
@@ -89,13 +117,22 @@ public abstract class Account implements Transactable, InterestBearing, Comparab
         if (this.equals(to)) {
             throw new InvalidAmountException("Cannot transfer to the same account");
         }
-        this.withdraw(amount);
+        boolean debited = false;
         try {
+            this.withdraw(amount);
+            debited = true;
             to.deposit(amount);
         } catch (BankException e) {
-            // Rollback withdrawal to maintain balance consistency
-            this.deposit(amount);
+            if (debited) {
+                try {
+                    // Rollback withdrawal to maintain balance consistency
+                    this.deposit(amount);
+                } catch (InvalidAmountException ignored) {
+                }
+            }
             throw e;
+        } finally {
+            // Auditing or session completion hook as required by Practical 8
         }
     }
 
