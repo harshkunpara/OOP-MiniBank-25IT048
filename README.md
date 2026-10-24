@@ -699,15 +699,61 @@ MiniBank provides a complete, clean, verifiable submission that reflects real-wo
 
 ---
 
-## Academic Context and Credits
+## 🎓 Academic Recognition & Project Credits
 
-- **Course**: Object Oriented Programming (CEUE203)
-- **Institution**: Faculty of Engineering and Technology
-- **Academic Year**: 2026 – 2027 (Semester 3)
-- **Student Name / Repository**: [Harsh Patel](https://github.com/harshkunpara) / [MiniBank](https://github.com/harshkunpara/MiniBank) / `OOP-MiniBank-25IT048`
+<div align="center">
+
+### MiniBank — Java Banking Management System
+
+**Part B Laboratory Project · Object-Oriented Programming**
+
+*Building practical Java skills through modular design, banking logic, and software engineering principles.*
+
+</div>
+
+### Academic Profile
+
+| Detail | Information |
+|:--|:--|
+| **Course** | Object-Oriented Programming (CEUE203) |
+| **Institution** | Faculty of Engineering and Technology |
+| **Academic Year** | 2026–2027 |
+| **Semester** | Semester III |
+| **Project Category** | Part B — Integrated Java Project |
+| **Student / Developer** | [Harsh Patel](https://github.com/harshkunpara) |
+| **GitHub Profile** | [@harshkunpara](https://github.com/harshkunpara) |
+| **Project Repository** | [OOP-MiniBank-25IT048](https://github.com/harshkunpara/MiniBank) |
+
+### Project Statement
+
+MiniBank is an academic Java project developed to bring together the concepts of Object-Oriented Programming through a unified banking management application. Its design emphasizes modular code organization, object-oriented principles, input validation, exception handling, transaction management, and concurrency concepts covered by the applicable Part B practicals.
+
+The project serves as a practical learning resource for demonstrating Java programming concepts, understanding software architecture, and developing maintainable applications.
+
+### Development Principles
+
+- **Modularity:** Organizing code into clearly defined packages and responsibilities.
+- **Correctness:** Applying validation and appropriate exception handling to banking operations.
+- **Maintainability:** Following consistent naming, formatting, and object-oriented design principles.
+- **Practical Learning:** Connecting individual laboratory concepts through a common project.
+- **Verification:** Using compilation, demonstrations, and tests to evaluate implemented functionality.
 
 ---
 
-## License
+## 📄 License & Usage
 
-This project is created for educational and academic evaluation purposes. All rights belong to the repository owner and respective academic institution. Not specified for commercial distribution.
+This project is maintained for educational, laboratory, and academic evaluation purposes.
+
+**License status:** No separate open-source license has been specified in this repository. Unless a license is added, permission to reuse, redistribute, modify, or commercially use the project should not be assumed beyond the rights provided by applicable law.
+
+For permissions or questions concerning reuse, please contact the repository owner through the [GitHub profile](https://github.com/harshkunpara).
+
+---
+
+<div align="center">
+
+**MiniBank · Java · Object-Oriented Programming**
+
+*Designed for learning. Built through practice.*
+
+</div>
