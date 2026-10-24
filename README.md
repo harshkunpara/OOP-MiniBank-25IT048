@@ -18,19 +18,20 @@
 5. [Key Features Implemented](#key-features-implemented)
 6. [Practical-Wise Implementation Matrix (Practicals 1–14)](#practical-wise-implementation-matrix)
 7. [Project Architecture](#project-architecture)
-8. [Folder & Package Structure](#folder--package-structure)
-9. [Prerequisites](#prerequisites)
-10. [Setup & Installation on Windows](#setup--installation-on-windows)
-11. [Compilation & Build Commands](#compilation--build-commands)
-12. [How to Run](#how-to-run)
+8. [Application Workflow](#application-workflow)
+9. [Folder & Package Structure](#folder--package-structure)
+10. [Prerequisites](#prerequisites)
+11. [Setup & Installation on Windows](#setup--installation-on-windows)
+12. [Compilation & Build Commands](#compilation--build-commands)
+13. [How to Run](#how-to-run)
     - [Running the Interactive Banking Application](#1-running-the-interactive-banking-application)
     - [Running the Master Demonstration Suite](#2-running-the-master-demonstration-suite-practicals-114)
     - [Running the Automated Unit Test Suite](#3-running-the-automated-unit-test-suite)
     - [Executing the Packaged Runnable JAR](#4-executing-the-packaged-runnable-jar)
-13. [Verified Sample Execution Outputs](#verified-sample-execution-outputs)
-14. [Testing & Verification Results](#testing--verification-results)
-15. [Known Limitations](#known-limitations)
-16. [Conclusion & Viva Preparation](#conclusion--viva-preparation)
+14. [Verified Sample Execution Outputs](#verified-sample-execution-outputs)
+15. [Testing & Verification Results](#testing--verification-results)
+16. [Known Limitations](#known-limitations)
+17. [Conclusion & Viva Preparation](#conclusion--viva-preparation)
 
 ---
 
@@ -208,6 +209,54 @@ MiniBank is organized around a clean **Layered Architecture**:
 ```
 
 ---
+
+## Application Workflow
+
+The following flowchart illustrates the main workflow of the MiniBank application, from startup and account operations to validation, transaction processing, and exit.
+
+```mermaid
+flowchart TD
+    A(["Start MiniBank"]) --> B["Initialize BankService"]
+    B --> C["Load Saved Account State"]
+    C --> D["Display Interactive Banking Menu"]
+
+    D --> E{"Select Operation"}
+
+    E -->|Open Account| F["Validate Details and Create Account"]
+    E -->|Deposit| G["Validate Amount and Deposit"]
+    E -->|Withdraw| H["Validate Balance and Withdrawal Rules"]
+    E -->|Transfer| I["Validate Accounts and Transfer Funds"]
+    E -->|Account Statement| J["Generate Account Statement"]
+    E -->|List or Search| K["Retrieve Matching Accounts"]
+    E -->|Batch Transactions| L["Process Tasks Using ExecutorService"]
+    E -->|Summary Report| M["Read Transaction Logs and Generate Report"]
+    E -->|Practical Demonstrations| N["Run Practical Demonstrations"]
+    E -->|Unit Tests| O["Execute Automated Tests"]
+    E -->|Exit| P["Save Account State and Shut Down Resources"]
+
+    F --> Q["Display Result or Handle Error"]
+    G --> Q
+    H --> Q
+    I --> Q
+    J --> R["Display Result"]
+    K --> R
+    L --> Q
+    M --> R
+    N --> R
+    O --> R
+
+    Q --> D
+    R --> D
+    P --> S(["End Application"])
+
+    classDef startEnd fill:#d9fbe5,stroke:#16803d,color:#14532d
+    classDef decision fill:#fff0c2,stroke:#b7791f,color:#713f12
+    classDef process fill:#e5efff,stroke:#356ac3,color:#173b75
+
+    class A,S startEnd
+    class E decision
+    class B,C,D,F,G,H,I,J,K,L,M,N,O,P,Q,R process
+```
 
 ## Folder & Package Structure
 
