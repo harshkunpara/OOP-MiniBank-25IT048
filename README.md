@@ -764,23 +764,6 @@ The automated test suite (`test.BankServiceTest`) directly executes the verifica
 
 ---
 
-## Conclusion & Viva Preparation
-
-MiniBank provides a complete, clean, verifiable submission that reflects real-world software engineering practices.
-
-### Key Viva Questions & Architectural Answers:
-
-1. **What is dynamic method dispatch, and how does MiniBank utilize it?**
-   - *Answer*: Dynamic method dispatch is the mechanism where a call to an overridden method is resolved at runtime rather than compile time. In MiniBank, `Account.interestRate()` dynamically resolves to 4.0% for `SavingsAccount`, 0.0% for `CurrentAccount`, and 7.0% for `FixedDepositAccount`, allowing the service layer to process all accounts uniformly through the `Account` base reference.
-2. **How does MiniBank prevent deadlocks during concurrent inter-account transfers?**
-   - *Answer*: In `TransactionProcessor.safeTransfer()`, MiniBank enforces a strict global lock acquisition order. Accounts are locked in order of their lexicographical `accountNumber` (`compareTo()`). Even if Thread 1 transfers A to B while Thread 2 transfers B to A, both threads acquire locks in the exact same order (A then B), breaking the circular wait condition and making deadlocks impossible.
-3. **How does the Generic `Repository<T>` extract primary keys without hardcoded getters?**
-   - *Answer*: `Repository<T>` utilizes Java Reflection. In `save(T entity)`, it iterates through `entity.getClass().getDeclaredFields()` and its superclasses to identify the field annotated with `@Id`. By invoking `field.setAccessible(true)` and `field.get(entity)`, it dynamically extracts the key regardless of whether the entity is an `Account`, a `Customer`, or any future entity type.
-4. **Why is serialization versioning (`serialVersionUID`) mandatory?**
-   - *Answer*: `serialVersionUID` is a unique identifier used during deserialization to verify that the sender and receiver of a serialized object have loaded classes that are binary-compatible. If class fields are modified without maintaining a consistent `serialVersionUID`, Java will throw `InvalidClassException`.
-
----
-
 ## Academic Recognition & Project Credits
 
 <div align="center">
